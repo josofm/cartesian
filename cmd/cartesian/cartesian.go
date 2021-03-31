@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/josofm/cartesian/api"
@@ -11,9 +10,9 @@ import (
 func main() {
 	log.Print("[Main] Starting application!")
 
-	fmt.Println(coordinate.Coordinates)
+	c := coordinate.NewCoordinate()
 
-	if err := api.NewApi().StartServer(); err != nil {
+	if err := api.NewApi(c).StartServer(); err != nil {
 		panic("Panic starging server!")
 	}
 
