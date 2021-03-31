@@ -30,6 +30,6 @@ coverage: check
 static-analysis: image
 	$(run) golangci-lint run ./...
 
-run: image
+run: build
 	$(run) ./cmd/cartesian/cartesian
 
