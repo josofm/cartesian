@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	errorParams = "Params must be valid numbers!"
+	errorParams = "Params must be valid numbers and distance must be positive"
 )
 
 type Api struct {
@@ -23,7 +23,7 @@ type Api struct {
 var params = []string{"x", "y", "distance"}
 
 type Coordinate interface {
-	CalculateRoute(vars map[string]string) []coordinate.Point
+	CalculateRoute(vars map[string]string, p []string) ([]coordinate.Point, error)
 }
 
 func NewApi(c Coordinate) *Api {
@@ -59,7 +59,12 @@ func (api *Api) calculate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	distances := api.c.CalculateRoute(vars)
+	distances, err := api.c.CalculateRoute(vars, params)
+	if err != nil {
+		log.Print("[calculate] invalid params!")
+		sendErrorMessage(w, http.StatusBadRequest, errorParams)
+		return
+	}
 	log.Println("[calculate] calculate ok - ", distances)
 	send(w, http.StatusOK, distances)
 	return
@@ -71,8 +76,12 @@ func validateParams(vars map[string]string) bool {
 		if _, ok := vars[p]; !ok {
 			return false
 		}
-		if _, err := strconv.ParseFloat(vars[p], 64); err != nil {
+		if v, err := strconv.Atoi(vars[p]); err != nil {
 			return false
+		} else {
+			if p == "distance" && v < 0 {
+				return false
+			}
 		}
 	}
 	return true
