@@ -6,8 +6,9 @@ import (
 
 type CoordinateMock struct {
 	points []coordinate.Point
+	Err    error
 }
 
-func (c *CoordinateMock) CalculateRoute(vars map[string]string) []coordinate.Point {
-	return c.points
+func (c *CoordinateMock) CalculateRoute(vars map[string]string, params []string) ([]coordinate.Point, error) {
+	return c.points, c.Err
 }

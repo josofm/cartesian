@@ -1,5 +1,5 @@
 img=josofm/cartesian
-run=docker run --rm -ti -v `pwd`:/app $(img)
+run=docker run -p 80:80 --rm -ti -v `pwd`:/app $(img)
 cov=coverage.out
 covhtml=coverage.html
 
