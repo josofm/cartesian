@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"log"
+	"sort"
 	"strconv"
 )
 
@@ -12,8 +13,9 @@ import (
 var content embed.FS
 
 type Point struct {
-	X int
-	Y int
+	X        int
+	Y        int
+	Distance int
 }
 
 type Coordinate struct {
@@ -59,11 +61,16 @@ func (c *Coordinate) CalculateRoute(vars map[string]string, params []string) ([]
 func (c *Coordinate) orderPoints(distance int, base Point) []Point {
 	var result []Point
 	for _, p := range c.Points {
-		if abs((base.X-p.X))+abs((base.Y-p.Y)) <= distance {
+		d := abs((base.X - p.X)) + abs((base.Y - p.Y))
+		if d <= distance {
+			p.Distance = d
 			result = append(result, p)
 		}
 	}
 
+	sort.Slice(result, func(i, j int) bool {
+		return result[i].Distance < result[j].Distance
+	})
 	return result
 }
 

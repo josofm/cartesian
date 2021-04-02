@@ -9,7 +9,7 @@ func (api *Api) routes() *mux.Router {
 	router.Use()
 
 	router.HandleFunc("/up", api.Up).Methods("GET")
-	router.HandleFunc("/api/points/{x}/{y}/{distance}", api.calculate).Methods("POST")
+	router.HandleFunc("/api/points/{x}/{y}/{distance}", api.calculate).Methods("GET")
 
 	return router
 }

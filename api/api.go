@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	errorParams = "Params must be valid numbers!"
+	errorParams = "Params must be valid numbers and distance must be positive"
 )
 
 type Api struct {

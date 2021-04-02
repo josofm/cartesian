@@ -20,15 +20,9 @@ check: image
 check-integration: image
 	$(run) go test -timeout 120s -race -coverprofile=$(cov) -tags=integration ./...
 
-benchmark: image
-	$(run) go test ./... -run=NONE -timeout 1h -bench=.
-
 coverage: check
 	$(run) go tool cover -html=$(cov) -o=$(covhtml)
 	xdg-open coverage.html
-
-static-analysis: image
-	$(run) golangci-lint run ./...
 
 run: build
 	$(run) ./cmd/cartesian/cartesian

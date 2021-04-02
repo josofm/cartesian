@@ -1,6 +1,7 @@
 package coordinate_test
 
 import (
+	"sort"
 	"testing"
 
 	"github.com/josofm/cartesian/coordinate"
@@ -32,7 +33,7 @@ func TestShoulGetPointsCorrectly(t *testing.T) {
 	}
 	points, err := c.CalculateRoute(vars, params)
 
-	assert.Equal(t, lenExpected, len(points))
+	assert.Equal(t, lenExpected, len(points), "Should be equal!")
 	assert.Nil(t, err, "Should be null!")
 
 }
@@ -48,7 +49,7 @@ func TestShoulGetErrorWhenDistanceIsNegative(t *testing.T) {
 	}
 	points, err := c.CalculateRoute(vars, params)
 
-	assert.Equal(t, lenExpected, len(points))
+	assert.Equal(t, lenExpected, len(points), "Should be equal!")
 	assert.NotNil(t, err, "Should be not null!")
 
 }
@@ -64,7 +65,7 @@ func TestShoulGetErrorWhenXIsInvalid(t *testing.T) {
 	}
 	points, err := c.CalculateRoute(vars, params)
 
-	assert.Equal(t, lenExpected, len(points))
+	assert.Equal(t, lenExpected, len(points), "Should be equal!")
 	assert.NotNil(t, err, "Should be not null!")
 }
 
@@ -79,7 +80,28 @@ func TestShoulGetErrorWhenYIsInvalid(t *testing.T) {
 	}
 	points, err := c.CalculateRoute(vars, params)
 
-	assert.Equal(t, lenExpected, len(points))
+	assert.Equal(t, lenExpected, len(points), "Should be equal!")
 	assert.NotNil(t, err, "Should be not null!")
 
+}
+
+func TestShouldValidateCorrectOrder(t *testing.T) {
+	c := coordinate.NewCoordinate()
+	lenExpected := 28
+
+	vars := map[string]string{
+		"x":        "-12",
+		"y":        "-40",
+		"distance": "75",
+	}
+	points, err := c.CalculateRoute(vars, params)
+
+	assert.Equal(t, lenExpected, len(points), "Should be equal!")
+	assert.True(
+		t,
+		sort.SliceIsSorted(points, func(i, j int) bool {
+			return points[i].Distance < points[j].Distance
+		}),
+		"Should be true!")
+	assert.Nil(t, err, "Should be not null!")
 }
