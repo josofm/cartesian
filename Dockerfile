@@ -16,5 +16,6 @@ WORKDIR /app
 COPY go.mod ./go.mod
 COPY go.sum ./go.sum
 
+EXPOSE 80
 
 RUN go mod download
