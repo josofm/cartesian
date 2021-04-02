@@ -21,6 +21,7 @@ type Api struct {
 }
 
 var params = []string{"x", "y", "distance"}
+var zeroValues = map[string]string{"message": "No points founded!"}
 
 type Coordinate interface {
 	CalculateRoute(vars map[string]string, p []string) ([]coordinate.Point, error)
@@ -66,6 +67,10 @@ func (api *Api) calculate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	log.Println("[calculate] calculate ok - ", distances)
+	if len(distances) == 0 {
+		send(w, http.StatusOK, zeroValues)
+		return
+	}
 	send(w, http.StatusOK, distances)
 	return
 
