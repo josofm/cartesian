@@ -1,0 +1,21 @@
+os:
+  - linux
+
+sudo: required
+
+services:
+  - docker
+
+language: go
+
+go:
+  - "tip"
+  - "1.16"
+
+script:
+  - make check
+  - make check-integration
+  
+notifications:
+  email:
+    - jfurlanmachado@gmail.com
