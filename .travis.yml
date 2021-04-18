@@ -15,8 +15,7 @@ go:
 script:
   - make check
   - make check-integration
-  - make coverage
-
+  
 notifications:
   email:
     - jfurlanmachado@gmail.com
