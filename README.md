@@ -1,4 +1,7 @@
 # cartesian
+[![Build Status](https://api.travis-ci.com/josofm/cartesian.svg?branch=main)](https://travis-ci.com/github/josofm/cartesian)
+[![Go Report Card](https://goreportcard.com/badge/github.com/josofm/cartesian)](https://goreportcard.com/report/github.com/josofm/cartesian)
+
 Api to Calculate [Manhattan distance](https://xlinux.nist.gov/dads/HTML/manhattanDistance.html#:~:text=Definition%3A%20The%20distance%20between%20two,y1%20%2D%20y2%7C.) in a simple 2-dimensional plane using [Go](https://golang.org/).
 This api receive 3 required params:
 - `x` integer. This represents the `x` coordinate of the search origin.
