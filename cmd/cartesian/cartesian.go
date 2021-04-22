@@ -13,7 +13,8 @@ func main() {
 	c := coordinate.NewCoordinate()
 
 	if err := api.NewApi(c).StartServer(); err != nil {
-		panic("Panic starging server!")
+		log.Print(err)
+		panic("Panic starting server!")
 	}
 
 }
